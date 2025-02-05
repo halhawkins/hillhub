@@ -1,14 +1,41 @@
 .bills-list-container {
-    display: flex;
+    /* display: flex; */
     width: 100%;
     height: 100%;
     text-align: left;
     background-color: aliceblue;
 }
+.bills-list-container ul {
+    list-style-type: none;
+    padding: 1rem;
+    margin: 0;
+}
+
+.bill-item {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+.bill-item-entry {
+    display: flex;
+    flex-direction: row;
+}
+.bill-date {
+    /* margin-left: 20px; */
+    font-size: 18px;
+    color: #757575;
+    margin-bottom: 10px;
+    flex-basis: 12rem;
+    max-width: 12rem;
+    flex-grow: 0;
+}
 .bill-title {
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    vertical-align: top;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1rem;
     color: darkblue;
     cursor: pointer;
+}
+.bill-type {
+    color:#3e4164
 }
