@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #e3f2fd;
+  height: 100vh;
 }
 .app-body {
   display: flex;
