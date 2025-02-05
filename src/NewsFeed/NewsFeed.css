@@ -1,0 +1,21 @@
+.news-feed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.news-item {
+    padding: 4px;
+    border: 2px solid black;
+    flex: 1 1 600px;
+    height: 167px;
+    display: flex;
+    text-align: left;
+    overflow-y: hidden;
+}
+.content-container {
+    margin-left: 8px;
+    flex-grow: 1;
+}
+.article-title {
+    margin-top: -4px;
+}
