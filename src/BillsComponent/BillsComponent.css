@@ -4,6 +4,8 @@
     height: 100%;
     text-align: left;
     background-color: aliceblue;
+    /* padding: 1rem; */
+    /* margin: 1rem; */
 }
 .bills-list-container ul {
     list-style-type: none;

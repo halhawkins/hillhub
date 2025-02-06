@@ -1,11 +1,12 @@
-import { FC, useEffect, useState } from "react";
-import { Bill, fetchBillsAPI } from "./BillsAPI";
+import React,{ FC, useEffect, useState } from "react";
+import { Bill, fetchBillDetailsAPI, fetchBillsAPI } from "./BillsAPI";
 import { useDispatch } from "react-redux";
-import { setBills } from "./BillsSlice";
+import { setBills,setBillDetails } from "./BillsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import "./BillsComponent.css";
-const BillsComponent:FC = () => {
+import { setView } from "../TopNavigation/TopNavSlice";
+const BillsComponent: FC = () => {
     const [billsArray, setBillsArray] = useState<Bill[]>([]);
     const dispatch = useDispatch();
     const bills = useSelector((state: RootState) => state.bills)
@@ -22,13 +23,6 @@ const BillsComponent:FC = () => {
         fetchBills();
     }, [dispatch]);
 
-    useEffect(() => {
-        console.log("Bills updated", bills);
-        // Update the state with the latest fetched bills
-        // setBillsArray(bills);
-        // dispatch(setBills({bills:bills, page: 0})); // Update the Redux state as well
-        // console.log("Fetched bills", bills);
-    },[bills])
     const date = new Date();
     const getBillType = (type: string) => {
         switch (type) {
@@ -52,9 +46,24 @@ const BillsComponent:FC = () => {
                 return "";
         }
     }
+    const handleClick = async (event: React.MouseEvent<HTMLTableRowElement>) => {
+        const target = event.target as HTMLTableCellElement;
+        const url = target.parentElement?.dataset.url;
+        console.log("Checking url", target.dataset.url);
+        if (!url) return;
+        const billDetails = await fetchBillDetailsAPI(url);
+        console.log("Checking Bill details", billDetails);
+        if (billDetails !== null) {
+            console.log("Bill details", billDetails);
+            dispatch(setBillDetails(billDetails));
+            dispatch(setView('BillDetails'))
+        // window.open(url, '_blank');
+        }
+    }
+
     return (
         <div className="bills-list-container">
-            <table style={{width: "100%"}}>
+            <table style={{width: "100%", padding: "0.5rem"}}>
                 <tr>
                     <th style={{width: "7rem"}}>Date</th>
                     <th style={{width: "5rem"}}>Chamber</th>
@@ -64,9 +73,10 @@ const BillsComponent:FC = () => {
             </table>
                 {bills.bills.map((bill, index) => {
                     const billDate = new Date(bill.updateDate);
+                    console.log("bill url", bill.url)
                     return (
                         <>
-                            <table style={{width: "100%"}} key={index}>
+                            <table style={{width: "100%", padding: "0.5rem"}} key={index}>
                                 <tr>
                                         <td style={{width: "7rem", verticalAlign: "top"}}>{billDate.toLocaleDateString('en-US', {
                                             day: '2-digit', 
@@ -81,8 +91,8 @@ const BillsComponent:FC = () => {
                                         </td>
                                     <td>
                                         <table style={{width: "100%"}}>
-                                            <tr className="bill-title">
-                                            {bill.title.replaceAll('"',"")}
+                                            <tr className="bill-title" data-url={bill.url} onClick={handleClick}>
+                                                <td>{bill.title.replaceAll('"',"")}</td>
                                             </tr>
                                         </table>
                                     </td>

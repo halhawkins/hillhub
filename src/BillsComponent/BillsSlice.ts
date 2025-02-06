@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Bill } from "./BillsAPI";
+import { Bill, BillResponse } from "./BillsAPI";
 
 interface BillsState {
   bills: Bill[];
   page: number;
+  billDetails: BillResponse | null; // Add the details slice here to hold the selected bill's details.
 }
 
 const initialState: BillsState = {
   bills: [],
   page: 0, // or 1, if you'd prefer a 1-based page count
+  billDetails: null,
 };
 
 export const billsSlice = createSlice({
@@ -21,8 +23,12 @@ export const billsSlice = createSlice({
       state.bills = bills;
       state.page = page;
     },
+    setBillDetails: (state, action: PayloadAction<BillResponse>) => {
+      console.log("Setting bill details", action.payload);
+      state.billDetails = {...action.payload};
+    }
   },
 });
 
-export const { setBills } = billsSlice.actions;
+export const { setBills, setBillDetails } = billsSlice.actions;
 export default billsSlice.reducer;
