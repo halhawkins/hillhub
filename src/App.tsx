@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import NewsFeed from './NewsFeed/NewsFeed';
 import hillHubLogo from "./assets/HillHub.png";
-import TopNavigation from './assets/TopNavigation/TopNavigation';
+import TopNavigation from './TopNavigation/TopNavigation';
 import BillsComponent from './BillsComponent/BillsComponent';
 
 //https://rss.app/explore/search?feed=tUyqHsnAOvKKzkHS&title=Politics
